@@ -1,0 +1,36 @@
+body{
+  padding: 10px;
+  margin: 10px;
+}
+/* table, th, td {
+  border: 1px solid black;
+} */
+
+.btn-primary{
+    min-width: 120px !important;
+    background: #4E9CAF !important;
+    background: 1px solid #4E9CAF !important;
+}
+header{
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
+  gap: 40px;
+  padding-bottom: 40px;
+}
+h1{
+  text-align: center;
+}
+main{
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+}
+hr{
+  width: 60% !important;
+}
+table{
+  width: 50% !important;
+}

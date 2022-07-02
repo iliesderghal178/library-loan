@@ -1,0 +1,96 @@
+   
+<!doctype html>
+
+<html lang="en">
+	<head>
+		<meta charset="utf-8">
+		<title>Home Page</title>
+		<meta name="description" content="form to add new books">
+		<meta name="author" content="Mark Tyers">
+		<meta name="viewport" content= "width=device-width, initial-scale=1.0">
+		<link href="/style.css" type="text/css" rel="stylesheet" />
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM" crossorigin="anonymous"></script>
+	</head>
+	<body>
+    <h1>STUDENT PORTAL</h1>
+		<header>
+      <a href="/" class="btn btn-primary">Home page</a>
+      <a href="/logout" class="btn btn-primary">Log out</a>
+		</header>
+		<main>
+
+            <table style="width: 50% !important;" class="table table-striped" id="myTable">
+              <thead >
+                <tr><th colspan='2'>Borrowed Books</th></tr>
+                <tr>
+                    <th>Name</th>
+                    <th>Return Date</th>
+                </tr>
+              </thead>
+              <tbody>
+                {{#each student_books}}
+                    <tr>
+                        <td>{{this.name}}</td>
+                        <td>{{this.return_date}}</td>
+                    </tr>
+                {{/each}}
+              </tbody>
+            </table>
+			<br>
+      <hr>
+			<input style="width: 50% !important;" type="text" id="myInput" class="form-control" onkeyup="myFunction1()" placeholder="Search for name or author" title="Type in a Book name or author">
+
+			<br>
+            <table style="width: 50% !important;" class="table table-striped" id="myTable1">
+              <thead >
+                <tr><th colspan='4'>BOOKS</th></tr>
+                <tr>
+                    <th>Name</th>
+                    <th>Author</th>
+                    <th>Stack Quantity</th>
+					          <th>Available Quantity</th>
+                </tr>
+              </thead>
+              <tbody >
+				
+                {{#each all_books}}
+                    <tr>
+                        <td>{{this.name}}</td>
+                        <td>{{this.author}}</td>
+                        <td>{{this.quantity}}</td>
+						            <td>{{this.available}}</td>
+                    </tr>
+                {{/each}}
+              </tbody>
+            </table>
+            <br>
+            <br>
+
+		
+		</main>
+	</body>
+</html>
+
+<script>
+function myFunction1() {
+  var input, filter, table, tr, td1, i, txtValue, txtValue1;
+  input = document.getElementById("myInput");
+  filter = input.value.toUpperCase();
+  table = document.getElementById("myTable1");
+  tr = table.getElementsByTagName("tr");
+  for (i = 0; i < tr.length; i++) {
+    td = tr[i].getElementsByTagName("td")[0];
+    td1 = tr[i].getElementsByTagName("td")[1];
+    if (td || td1) {
+      txtValue = td.textContent || td.innerText;
+      txtValue1 = td1.textContent || td1.innerText;
+      if (txtValue.toUpperCase().indexOf(filter) > -1 || txtValue1.toUpperCase().indexOf(filter) > -1) {
+        tr[i].style.display = "";
+      } else {
+        tr[i].style.display = "none";
+      }
+    }       
+  }
+}
+</script>
