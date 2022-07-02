@@ -3,9 +3,6 @@
 
 This template is designed to be installed inside a Codio box. To to this, open the terminal and run the following command:
 
-```shell
-$ curl -sL https://bit.ly/3htttku | bash
-```
 
 This will configure the box ready for you to start development.
 
