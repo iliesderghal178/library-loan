@@ -31,7 +31,12 @@
 				</tr>
 				{{#each students}}
 					<tr>
-						<td><a href="/student-record/id={{this.id}}">{{this.user}}</a></td>
+						<td>
+							<form method="post" action="/student-info">
+								<input type="text" name="id" value={{this.id}} hidden>
+								<input type="submit" value={{this.user}}>
+							</form>
+						</td>
 						<td>{{this.count}}</td>
 
 					</tr>

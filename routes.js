@@ -34,12 +34,15 @@ router.get('/register', async context => {
 })
 
 // Route for the student record where url parameter is id
-router.get('/student-record/:id', async context => {
+router.post('/student-info', async context => {
 
-	// Getting url parameter
-	let param = context.params.id
-	const getid = param.split("=");
-	let id= getid[1];
+	// Getting form input
+	const body = context.request.body({ type: 'form' })
+	const value = await body.value
+	const obj = Object.fromEntries(value)
+	let id= obj.id;
+
+	
 	
 	// Checking if the user is authoried
 	const authorised = context.cookies.get('authorised')
@@ -52,43 +55,13 @@ router.get('/student-record/:id', async context => {
 
 	// Checking if the user is librarian
 	if(data[2]==1){
-		const borrow_record = await get_student_borrow(id);
-		const body = await handle.renderView('student-record', {borrow_record,id})
-		context.response.body = body
-	}
-	// Else route to home page
-	else{
-		context.response.redirect('/')
-	}
-})
-
-// Route for the student record where url parameter is id and book_id for adding in borrow record
-router.get('/student-record/:book_id/:id', async context => {
-
-	// Getting url parameter id
-	let param = await context.params.id
-	const getid = param.split("=");
-	let id= getid[1];
-
-	// Getting url parameter book_id
-	param = await context.params.book_id
-	const getBookid = param.split("=");
-	let book_id= getBookid[1];
-
-	// Checking if the user is authoried
-	const authorised = context.cookies.get('authorised')
-	if(authorised === undefined) context.response.redirect('/')
-
-	// Getting record from the context cookies
-	let data = await authorised.then(function(value){
-		return value;
-	})
-
-	// Checking if the user is librarian
-	if(data[2]==1){
-		const return_record = await return_borrow(book_id,id);
-		const borrow_record = await get_student_borrow(id);
+		console.log(obj.book_id)
+		if(obj.book_id){
+			let book_id = obj.book_id;
+			const return_record = await return_borrow(book_id,id);
+		}
 		
+		const borrow_record = await get_student_borrow(id);
 		const body = await handle.renderView('student-record', {borrow_record,id})
 		context.response.body = body
 	}
@@ -97,6 +70,8 @@ router.get('/student-record/:book_id/:id', async context => {
 		context.response.redirect('/')
 	}
 })
+
+
 
 // Route for the student record for borrowing of books
 router.post('/student-record', async context => {
